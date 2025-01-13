@@ -67,6 +67,19 @@ python infer.py --test_imgs test_imgs --output output --checkpoints checkpoints
 # given generated 3D-GS, perform TSDF mesh extraction
 python infer_mesh.py --test_imgs test_imgs --output output --checkpoints checkpoints --mesh_quality high
 ```
+### Training
+```
+# render multiview RGB images from scan (required Blenderproc package)
+blenderproc run --blender-install-path /home/yuxuan/project/ render_bproc_thuman2.py --subject 0001
+
+# optional, pretrain Multiview Diffusion (if your data is very different to pretrained distribution)
+accelerate launch train_MultiviewDiffusion_diffusion.py
+
+# optional, pretrain Multiview Reconstruction with Diffusion (if your data is very different to pretrained distribution)
+accelerate launch train_MultiviewReconstructor_diffusion.py
+
+# Core training script of joint 2D and 3D diffusion training.
+accelerate launch train_MVDMVR_joint.py
 
 ## Citation :writing_hand:
 
